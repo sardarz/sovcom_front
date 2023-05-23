@@ -1,8 +1,11 @@
 import { useState } from "react";
 import { Routes, Route, Outlet, Link } from "react-router-dom";
 import "./App.css";
+import { RequireAuth, useAuth } from "./auth/AuthProvider";
+import { LoginPage } from "./auth/LoginPage";
 
 const Layout = () => {
+  const auth = useAuth();
   return (
     <>
       <nav>
@@ -14,8 +17,13 @@ const Layout = () => {
             <Link to="/about">About</Link>
           </li>
           <li>
-            <Link to="empty">Non existent</Link>
+            <Link to="empty">Empty</Link>
           </li>
+          {!auth.user ? (
+            <li>
+              <Link to="login">Login</Link>
+            </li>
+          ) : null}
         </ul>
       </nav>
       <Outlet />
@@ -25,12 +33,16 @@ const Layout = () => {
 
 const Home = () => {
   const [counter, setCounter] = useState(0);
-
+  const auth = useAuth();
+  console.log(auth);
   return (
     <main>
       <h1>Home</h1>
       <h2>{counter}</h2>
       <button onClick={() => setCounter(counter + 1)}>increment</button>
+      <button onClick={() => auth.signout(() => console.log(auth))}>
+        logout
+      </button>
     </main>
   );
 };
@@ -62,7 +74,16 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
-          <Route path="about" element={<About />} />
+          <Route path="login" element={<LoginPage />} />
+          <Route
+            path="about"
+            element={
+              <RequireAuth>
+                <About />
+              </RequireAuth>
+            }
+          />
+
           <Route path="*" element={<Empty />} />
         </Route>
       </Routes>
