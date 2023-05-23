@@ -1,6 +1,6 @@
 import { createContext, useContext, useState } from "react";
 import { useLocation, Navigate } from "react-router-dom";
-import { authWrapper } from "./AuthWrapper";
+import { authWrapper } from "./authWrapper";
 
 interface AuthContextType {
   user: any;
