@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import recruiterSlice from "../features/recruiterSlice";
+import recruiterSlice from "../features/recruiter/recruiterSlice";
 
 export const store = configureStore({
   reducer: {

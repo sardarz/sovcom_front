@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RootState } from "../app/store";
+import { RootState } from "../../app/store";
 
 const data = [
   {
@@ -26,6 +26,11 @@ const data = [
           "опыт ведения деловой переписки, грамотность при написании документов;",
           "умение самостоятельно искать ответы на поставленные вопросы;",
         ],
+        insider_info: [
+          "В офисе работает 120 человек",
+          "Техника старая, часто требует обслуживания",
+          "Непосредственный начальник страдает СДВГ",
+        ],
       },
       {
         position: "Backend dev ",
@@ -41,6 +46,11 @@ const data = [
           "опыт ведения деловой переписки, грамотность при написании документов;",
           "опыт работы: от 5 лет;",
           "умение самостоятельно искать ответы на поставленные вопросы;",
+        ],
+        insider_info: [
+          "В офисе работает 120 человек",
+          "Техника старая, часто требует обслуживания",
+          "Непосредственный начальник страдает СДВГ",
         ],
       },
     ],
@@ -69,6 +79,11 @@ const data = [
           "опыт ведения деловой переписки, грамотность при написании документов;",
           "умение самостоятельно искать ответы на поставленные вопросы;",
         ],
+        insider_info: [
+          "В офисе работает 120 человек",
+          "Техника старая, часто требует обслуживания",
+          "Непосредственный начальник страдает СДВГ",
+        ],
       },
       {
         position: "Devops",
@@ -85,6 +100,11 @@ const data = [
           "опыт работы: от 5 лет;",
           "умение самостоятельно искать ответы на поставленные вопросы;",
         ],
+        insider_info: [
+          "В офисе работает 120 человек",
+          "Техника старая, часто требует обслуживания",
+          "Непосредственный начальник страдает СДВГ",
+        ],
       },
     ],
   },
@@ -96,34 +116,41 @@ const recruiterSlice = createSlice({
   initialState: {
     data,
     cards,
-    currentlySelectedPosition: 0,
-    currentlySelectedCard: cards[0],
+    currentPosition: null as number | null,
+    currentCard: cards[0],
   },
   reducers: {
-    changeCurrentlySelectedFields(
-      state,
-      action: PayloadAction<{ position?: number; card: string }>
-    ) {
+    setCurrentCard(state, action: PayloadAction<{ card: string }>) {
       // const newSelectedCardIdx = state.data.findIndex(el => el.requestNum === action.payload.card)
-      state.currentlySelectedCard = action.payload.card;
-      if (action.payload.position)
-        state.currentlySelectedPosition = action.payload.position;
+      state.currentCard = action.payload.card;
+    },
+    setCurrentPosition(state, action: PayloadAction<null | number>) {
+      state.currentPosition = action.payload;
     },
   },
 });
 
-export const { changeCurrentlySelectedFields } = recruiterSlice.actions;
+export const { setCurrentCard, setCurrentPosition } = recruiterSlice.actions;
 
-export const getCurrentlySelectedCard = (state: RootState) =>
-  state.recruiter.currentlySelectedCard;
-export const getCurrentlySelectedPosition = (state: RootState) =>
-  state.recruiter.currentlySelectedPosition;
+export const getCurrentCard = (state: RootState) => state.recruiter.currentCard;
+export const getCurrentPositionIdx = (state: RootState) =>
+  state.recruiter.currentPosition;
 export const getCurrentCardsPositions = (state: RootState) => {
-  const currentCardNum = state.recruiter.currentlySelectedCard;
+  const currentCardNum = state.recruiter.currentCard;
   const currentCard = state.recruiter.data.find(
     (el) => currentCardNum === el.requestNum
   );
   return currentCard?.jobs;
+};
+export const getCurrentPositionData = (state: RootState) => {
+  const currentCardNum = state.recruiter.currentCard;
+  const currentCard = state.recruiter.data.find(
+    (el) => currentCardNum === el.requestNum
+  );
+  if (currentCard && state.recruiter.currentPosition !== null)
+    return currentCard?.jobs[state.recruiter.currentPosition];
+
+  return null;
 };
 
 export default recruiterSlice.reducer;
