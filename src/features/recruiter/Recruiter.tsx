@@ -1,6 +1,4 @@
-import {
-  getCurrentPositionIdx,
-} from "./recruiterSlice";
+import { getCurrentPositionIdx } from "./recruiterSlice";
 import { useAppSelector } from "../../app/hooks";
 import CurrentSelection from "./CurrentSelection";
 import { PositionDescription } from "./PositionDescription";
@@ -31,7 +29,7 @@ const Recruiter = () => {
       </div>
       <CardsForJobs />
       <div className="bg-[#F5F6FA]">
-        
+        <Funnel />
         <div className="pl-8 pt-11">
           {currentPositionIdx !== null ? (
             <ShowPosition />
@@ -44,6 +42,27 @@ const Recruiter = () => {
   );
 };
 
+function Funnel() {
+  const data = [
+    "В работе",
+    "Новые",
+    "Контакт",
+    "Тестовое задание",
+    "Оценка",
+    "Согласование",
+    "Финальное интервью",
+    "Решение заказчика",
+    "Выставление офера",
+    "Выход на работу",
+    "Закрытие",
+  ];
+
+  return <div className="flex gap-3 pl-8 pt-11">
+    {data.map(d => {
+      return <a href="#" className="text-xs text-gray-400">{d}</a>
+    })}
+  </div>
+}
 
 function CardsForJobs() {
   return (
