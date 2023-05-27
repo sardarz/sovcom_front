@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { RootState } from "../app/store";
 
 const data = [
   {
@@ -45,10 +46,10 @@ const data = [
     ],
   },
   {
-    requestNum: "#330",
+    requestNum: "#340",
     jobs: [
       {
-        position: "Офис-менеджер ",
+        position: "Системный админ",
         description: "3 года опыта работы",
         count: 3,
         keySkills: [
@@ -70,7 +71,7 @@ const data = [
         ],
       },
       {
-        position: "Backend dev ",
+        position: "Devops",
         description: "3 года опыта работы",
         count: 3,
         keySkills: ["Python", "JS", "MongoDB", "OOP"],
@@ -101,15 +102,28 @@ const recruiterSlice = createSlice({
   reducers: {
     changeCurrentlySelectedFields(
       state,
-      action: PayloadAction<{ position: number; card: string }>
+      action: PayloadAction<{ position?: number; card: string }>
     ) {
       // const newSelectedCardIdx = state.data.findIndex(el => el.requestNum === action.payload.card)
       state.currentlySelectedCard = action.payload.card;
-      state.currentlySelectedPosition = action.payload.position;
+      if (action.payload.position)
+        state.currentlySelectedPosition = action.payload.position;
     },
   },
 });
 
 export const { changeCurrentlySelectedFields } = recruiterSlice.actions;
 
-export default recruiterSlice.reducer
+export const getCurrentlySelectedCard = (state: RootState) =>
+  state.recruiter.currentlySelectedCard;
+export const getCurrentlySelectedPosition = (state: RootState) =>
+  state.recruiter.currentlySelectedPosition;
+export const getCurrentCardsPositions = (state: RootState) => {
+  const currentCardNum = state.recruiter.currentlySelectedCard;
+  const currentCard = state.recruiter.data.find(
+    (el) => currentCardNum === el.requestNum
+  );
+  return currentCard?.jobs;
+};
+
+export default recruiterSlice.reducer;
