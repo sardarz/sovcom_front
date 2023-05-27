@@ -83,24 +83,6 @@ function CardsForJobs() {
 
 function CurrentSelection() {
   const [closed, setClosed] = useState(false);
-  // const data = [
-  //   {
-  //     requestNum: "#330",
-  //     jobs: [
-  //       { position: "Фронтенд", description: "3 yoe", count: 3 },
-  //       { position: "backend dev", description: "senior dev", count: 1 },
-  //     ],
-  //     active: false,
-  //   },
-  //   {
-  //     requestNum: "#340",
-  //     jobs: [
-  //       { position: "Фронтенд", description: "3 yoe", count: 3 },
-  //       { position: "backend dev", description: "senior dev", count: 1 },
-  //     ],
-  //     active: false,
-  //   },
-  // ];
   const data = useAppSelector(state => state.recruiter.data)
   const [activeIdx, setActiveIdx] = useState(0);
 
