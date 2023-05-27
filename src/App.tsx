@@ -5,7 +5,7 @@ import { RequireAuth, useAuth } from "./auth/AuthProvider";
 import { LoginPage } from "./auth/LoginPage";
 import Layout from "./components/Layout/Layout";
 import "./index.css";
-import Recruiter from "./components/Recruiter/Recruiter";
+import Recruiter from "./features/recruiter/Recruiter";
 
 const NotFound = () => {
   return <h1>empty</h1>;
