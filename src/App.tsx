@@ -4,7 +4,7 @@ import "./App.css";
 import { RequireAuth, useAuth } from "./auth/AuthProvider";
 import { LoginPage } from "./auth/LoginPage";
 import Layout from "./components/Layout/Layout";
-import "./index.css"
+import "./index.css";
 import Recruiter from "./components/Recruiter/Recruiter";
 
 const NotFound = () => {
