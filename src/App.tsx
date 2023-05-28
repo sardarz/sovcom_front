@@ -1,34 +1,37 @@
-import { useState } from "react";
-import { Routes, Route, Outlet, Link } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import "./App.css";
-import { RequireAuth, useAuth } from "./auth/AuthProvider";
+import { RequireAuth } from "./auth/AuthProvider";
 import { LoginPage } from "./auth/LoginPage";
 import Layout from "./components/Layout/Layout";
 import "./index.css";
 import Recruiter from "./features/recruiter/Recruiter";
 
 const NotFound = () => {
-  return <h1>empty</h1>;
+  return (
+    <div className="flex h-full items-center justify-center bg-[#1B378C] ">
+      <div className="flex w-[500px] flex-col items-center justify-center gap-4 rounded-xl bg-white px-12 py-9">
+        <h1 className="text-xl font-bold uppercase">404 Такая страница не существует</h1>
+      </div>
+    </div>
+  );
 };
 
 function App() {
   return (
     <div className="h-screen">
-      {/* <h3 className="text-4xl mb-12">Basic example of react router dom</h3> */}
       <Routes>
-        <Route path="login" element={<LoginPage />} />
-        <Route path="/" element={<Layout />}>
+        <Route path="/" element={<LoginPage />} />
+        <Route path="/recruiter" element={<Layout />}>
           <Route
-            path="about"
+            index
             element={
               <RequireAuth>
-                <NotFound />
+                <Recruiter />
               </RequireAuth>
             }
           />
-          <Route path="test" element={<Recruiter />} />
-          <Route path="*" element={<NotFound />} />
         </Route>
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
   );
